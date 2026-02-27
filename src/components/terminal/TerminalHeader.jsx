@@ -5,14 +5,12 @@ export default function TerminalHeader() {
       style={{ borderColor: "#008e76", backdropFilter: "blur(2px)" }}
     >
       {/* Token icon placeholder (cyan circle as SVG) */}
-      <div
-        className="w-11 h-11 rounded-full flex items-center justify-center mr-4 flex-shrink-0"
-        style={{ filter: "drop-shadow(0 0 5px #14f1ff)", background: "rgba(20,241,255,0.1)", border: "1px solid #14f1ff" }}
-      >
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="#14f1ff">
-          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#14f1ff" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
-      </div>
+      <img
+        src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a172f6f971ae630e926921/774df0935_DUC.png"
+        alt="DUC Logo"
+        className="w-12 h-12 mr-4 flex-shrink-0"
+        style={{ filter: "drop-shadow(0 0 5px #14f1ff)" }}
+      />
 
       <div className="flex flex-col gap-1">
         <h2 className="m-0 font-bold text-lg tracking-wide" style={{ color: "#14f1ff" }}>

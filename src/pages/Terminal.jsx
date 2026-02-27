@@ -136,7 +136,7 @@ export default function Terminal() {
       <div
         className="fixed inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: 'url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=1600&q=80")',
+          backgroundImage: 'url("https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a172f6f971ae630e926921/07230f1fc_ducsinarow.png")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.08,
