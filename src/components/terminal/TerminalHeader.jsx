@@ -2,7 +2,7 @@ export default function TerminalHeader() {
   return (
     <div
       className="flex items-center border-b pb-4 mb-5"
-      style={{ borderColor: "#008e76", backdropFilter: "blur(2px)" }}
+      style={{ borderColor: "#008e76", backdropFilter: "blur(2px)", paddingTop: "env(safe-area-inset-top, 0px)" }}
     >
       {/* Token icon placeholder (cyan circle as SVG) */}
       <img
