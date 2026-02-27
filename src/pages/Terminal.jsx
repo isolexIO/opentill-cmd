@@ -23,7 +23,6 @@ export default function Terminal() {
 
   useEffect(() => {
     inputRef.current?.focus();
-    base44.auth.me().then(setUser).catch(() => {});
   }, []);
 
   // Handle URL-based page navigation (back button support)
