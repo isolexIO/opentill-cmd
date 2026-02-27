@@ -131,7 +131,7 @@ export default function Terminal() {
       case "DOWNLOAD":
         if (target === "MANIFESTO") {
           addText("OPENING DOCUMENT... PLEASE WAIT.");
-          setTimeout(() => { window.open("openTILL_SMPF_Whitepaper_FINAL.pdf", "_blank"); }, 500);
+          setTimeout(() => { window.open("https://ipfs.io/ipns/k51qzi5uqu5dgaqxrofaep6t6xvv0x7y0pkuyp9by69r0s9fl2h4dbbvf7uab5", "_blank"); }, 500);
         } else {
           addText("UNKNOWN DOWNLOAD TARGET.");
         }
