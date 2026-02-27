@@ -174,12 +174,6 @@ export default function Terminal() {
     setPullDistance(0);
   }
 
-  async function handleDeleteAccount() {
-    if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) return;
-    // Just log out — actual deletion would need a backend function
-    base44.auth.logout();
-  }
-
   return (
     <div
       className="min-h-screen bg-black text-[#00ffcc] font-mono relative overflow-x-hidden"
