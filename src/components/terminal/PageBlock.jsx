@@ -39,16 +39,7 @@ export default function PageBlock({ page }) {
       )}
 
       <div className="mt-3 text-xs" style={{ color: "#008e76" }}>
-        Tip:{" "}
-        <a
-          href="https://ipfs.io/ipns/k51qzi5uqu5dgaqxrofaep6t6xvv0x7y0pkuyp9by69r0s9fl2h4dbbvf7uab5"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: "#14f1ff", textDecoration: "underline" }}
-        >
-          DOWNLOAD MANIFESTO
-        </a>{" "}
-        opens the full PDF with charts/visuals.
+        Tip: DOWNLOAD MANIFESTO opens the full PDF with charts/visuals.
       </div>
     </div>
   );
