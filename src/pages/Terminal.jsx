@@ -280,15 +280,7 @@ export default function Terminal() {
               app.isolex.io
             </a>
           </span>
-          {user && (
-            <button
-              onClick={handleDeleteAccount}
-              className="text-xs px-2 py-0.5 rounded border transition-colors"
-              style={{ color: "#ff4444", borderColor: "#ff444455", background: "transparent" }}
-            >
-              DELETE ACCOUNT
-            </button>
-          )}
+
         </div>
       </div>
 
