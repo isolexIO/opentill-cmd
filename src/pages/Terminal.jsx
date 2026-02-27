@@ -11,7 +11,6 @@ export default function Terminal() {
   const [outputItems, setOutputItems] = useState(INITIAL_OUTPUT);
   const [inputValue, setInputValue] = useState("");
   const [currentPath, setCurrentPath] = useState(["C:", "openTILL"]);
-  const [user, setUser] = useState(null);
   const inputRef = useRef(null);
   const bottomRef = useRef(null);
   const navigate = useNavigate();
