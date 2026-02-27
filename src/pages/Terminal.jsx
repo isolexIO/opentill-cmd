@@ -4,7 +4,6 @@ import TerminalOutput from "../components/terminal/TerminalOutput";
 import TerminalHeader from "../components/terminal/TerminalHeader";
 import MobileCommandBar from "../components/terminal/MobileCommandBar";
 import { whitepaperPages, fileSystem } from "../components/terminal/terminalData";
-import { base44 } from "@/api/base44Client";
 
 const INITIAL_OUTPUT = [{ type: "text", content: "--------------------------------------------------\nType HELP for available commands." }];
 
