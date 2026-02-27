@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import TerminalOutput from "../components/terminal/TerminalOutput";
 import TerminalHeader from "../components/terminal/TerminalHeader";
+import MobileCommandBar from "../components/terminal/MobileCommandBar";
 import { whitepaperPages, fileSystem } from "../components/terminal/terminalData";
+import { base44 } from "@/api/base44Client";
 
 const INITIAL_OUTPUT = [{ type: "text", content: "--------------------------------------------------\nType HELP for available commands." }];
 
@@ -9,12 +12,38 @@ export default function Terminal() {
   const [outputItems, setOutputItems] = useState(INITIAL_OUTPUT);
   const [inputValue, setInputValue] = useState("");
   const [currentPath, setCurrentPath] = useState(["C:", "openTILL"]);
+  const [user, setUser] = useState(null);
   const inputRef = useRef(null);
   const bottomRef = useRef(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Pull-to-refresh state
+  const pullStartY = useRef(null);
+  const [pullDistance, setPullDistance] = useState(0);
+  const PULL_THRESHOLD = 80;
 
   useEffect(() => {
     inputRef.current?.focus();
+    base44.auth.me().then(setUser).catch(() => {});
   }, []);
+
+  // Handle URL-based page navigation (back button support)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const page = params.get("page");
+    if (page) {
+      const p = whitepaperPages[page.toUpperCase()];
+      if (p) {
+        setOutputItems(prev => {
+          // Avoid duplicate if already shown
+          const last = prev[prev.length - 1];
+          if (last?.type === "page" && last.pageKey === page.toUpperCase()) return prev;
+          return [...prev, { type: "text", content: "--------------------------------------------------" }, { type: "page", pageKey: page.toUpperCase(), page: p }];
+        });
+      }
+    }
+  }, [location.search]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -38,6 +67,8 @@ export default function Terminal() {
       addText("PAGE NOT FOUND. Type PAGES to list available pages.");
       return;
     }
+    // Update URL for back-button support
+    navigate(`?page=${pageKey}`, { replace: false });
     setOutputItems(prev => [...prev, { type: "page", pageKey, page: p }]);
   }
 
@@ -111,6 +142,7 @@ export default function Terminal() {
 
       case "CLS":
         setOutputItems(INITIAL_OUTPUT);
+        navigate("", { replace: true });
         break;
 
       default:
@@ -126,12 +158,55 @@ export default function Terminal() {
     }
   }
 
+  // Pull-to-refresh handlers
+  function onTouchStart(e) {
+    if (window.scrollY === 0) pullStartY.current = e.touches[0].clientY;
+  }
+
+  function onTouchMove(e) {
+    if (pullStartY.current === null) return;
+    const delta = e.touches[0].clientY - pullStartY.current;
+    if (delta > 0) setPullDistance(Math.min(delta, PULL_THRESHOLD + 20));
+  }
+
+  function onTouchEnd() {
+    if (pullDistance >= PULL_THRESHOLD) {
+      handleCommand("CLS");
+    }
+    pullStartY.current = null;
+    setPullDistance(0);
+  }
+
+  async function handleDeleteAccount() {
+    if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) return;
+    // Just log out — actual deletion would need a backend function
+    base44.auth.logout();
+  }
+
   return (
     <div
       className="min-h-screen bg-black text-[#00ffcc] font-mono relative overflow-x-hidden"
       onClick={focusInput}
       style={{ fontFamily: '"Courier New", monospace' }}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
+      {/* Pull-to-refresh indicator */}
+      {pullDistance > 0 && (
+        <div
+          className="fixed top-0 left-0 w-full flex items-center justify-center z-50 text-xs transition-all"
+          style={{
+            height: `${pullDistance}px`,
+            color: "#14f1ff",
+            background: "rgba(0,0,0,0.6)",
+            opacity: pullDistance / PULL_THRESHOLD,
+          }}
+        >
+          {pullDistance >= PULL_THRESHOLD ? "↑ Release to clear screen" : "↓ Pull to refresh (CLS)"}
+        </div>
+      )}
+
       {/* Background image */}
       <div
         className="fixed inset-0 pointer-events-none z-0"
@@ -149,13 +224,16 @@ export default function Terminal() {
         style={{ background: "radial-gradient(circle at 50% 35%, rgba(0,0,0,0.35), rgba(0,0,0,0.88) 70%)" }}
       />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 py-4 min-h-screen text-base">
+      <div
+        className="relative z-10 max-w-5xl mx-auto px-4 text-base"
+        style={{ paddingTop: "calc(env(safe-area-inset-top) + 1rem)" }}
+      >
         <TerminalHeader />
 
         <TerminalOutput outputItems={outputItems} />
 
         {/* Input line */}
-        <div className="flex items-center pb-20 mt-1">
+        <div className="flex items-center mt-1" style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 7rem)" }}>
           <span className="mr-2 font-bold" style={{ color: "#14f1ff" }}>
             {currentPath.join("\\")}{"\\>"}
           </span>
@@ -187,20 +265,40 @@ export default function Terminal() {
         <div ref={bottomRef} />
       </div>
 
+      {/* Mobile Command Bar */}
+      <MobileCommandBar onCommand={handleCommand} />
+
       {/* Footer */}
       <div
-        className="fixed bottom-0 left-0 w-full z-20 text-sm px-5 py-2 border-t"
+        className="fixed bottom-0 left-0 w-full z-20 text-xs border-t"
         style={{
           color: "#008e76",
-          backgroundColor: "rgba(0,0,0,0.75)",
+          backgroundColor: "rgba(0,0,0,0.85)",
           borderColor: "#111",
           backdropFilter: "blur(4px)",
+          paddingLeft: "calc(env(safe-area-inset-left) + 1.25rem)",
+          paddingRight: "calc(env(safe-area-inset-right) + 1.25rem)",
+          paddingTop: "0.3rem",
+          paddingBottom: "calc(env(safe-area-inset-bottom) + 0.3rem)",
         }}
       >
-        © 2026 ISOLEX CORPORATION |{" "}
-        <a href="https://app.isolex.io" target="_blank" rel="noopener" style={{ color: "#14f1ff" }}>
-          app.isolex.io
-        </a>
+        <div className="flex items-center justify-between flex-wrap gap-1">
+          <span>
+            © 2026 ISOLEX CORPORATION |{" "}
+            <a href="https://app.isolex.io" target="_blank" rel="noopener" style={{ color: "#14f1ff" }}>
+              app.isolex.io
+            </a>
+          </span>
+          {user && (
+            <button
+              onClick={handleDeleteAccount}
+              className="text-xs px-2 py-0.5 rounded border transition-colors"
+              style={{ color: "#ff4444", borderColor: "#ff444455", background: "transparent" }}
+            >
+              DELETE ACCOUNT
+            </button>
+          )}
+        </div>
       </div>
 
       <style>{`
