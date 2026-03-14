@@ -1,150 +1,177 @@
 export const whitepaperPages = {
-  COVER: {
-    title: "openTILL SMPF | Institutional Whitepaper v1.0",
-    meta: "Confidential — For Strategic & Institutional Review | Powered by $DUC",
-    body: [
-      "openTILL | Structured Merchant Participation Framework (SMPF)",
-      "Powered by $DUC (Digital Utility Credit)",
-      "Institutional Whitepaper v1.0",
-    ],
+  LEGAL: {
+    title: "LEGAL DISCLAIMER",
+    content: [
+      "This document is provided for informational purposes only.",
+      "Digital Utility Credit (DUC) is a utility token for ecosystem access, participation, and operational functionality.",
+      "It does not represent ownership, equity, dividends, or profit rights.",
+      "Participants should evaluate legal, technical, operational, and regulatory considerations in their jurisdiction."
+    ]
   },
-  EXECUTIVE_SUMMARY: {
-    title: "Executive Summary",
-    meta: "openTILL | Structured Merchant Participation Framework",
-    body: [
-      "openTILL is a merchant-aligned financial infrastructure platform engineered to modernize payment processing and unify commerce operations through transparent economics and programmable participation.",
-      "The Structured Merchant Participation Framework introduces a Digital Utility Credit (DUC) that rewards measurable contribution while preserving positive treasury flow.",
-    ],
+
+  INTRODUCTION: {
+    title: "1. INTRODUCTION",
+    content: [
+      "openTILL SMPF is designed to restore merchant independence in modern commerce.",
+      "The platform bridges traditional payments and Solana-based digital assets in one unified POS environment.",
+      "DUC acts as the utility mechanism for access, participation, and operational optimization."
+    ]
   },
-  MARKET_CONTEXT: {
-    title: "Market Context",
-    meta: "Problem landscape for modern merchants",
-    body: [
-      "Modern merchants face escalating processing fees, opaque pricing structures, and fragmented software ecosystems.",
-      "openTILL replaces extraction-based models with alignment-based infrastructure.",
-    ],
+
+  MISSION: {
+    title: "2. MISSION",
+    content: [
+      "Empower merchants with open, transparent, and flexible commerce infrastructure.",
+      "Reduce reliance on unnecessary intermediaries and excessive fees.",
+      "Strengthen merchant control over data, relationships, and economic participation."
+    ]
   },
-  PLATFORM_ARCHITECTURE: {
-    title: "Platform Architecture",
-    meta: "Cloud-native commerce stack",
-    body: [
-      "openTILL integrates processing infrastructure, unified dashboards, inventory intelligence, QR ordering modules, API extensibility, and multi-location management into a cloud-native framework.",
-    ],
+
+  VISION: {
+    title: "3. VISION",
+    content: [
+      "A merchant-owned commerce network where businesses participate directly in the value they create.",
+      "A unified ecosystem of merchants, ambassadors, builders, and consumers.",
+      "A modern operating system for commerce with secure, efficient, and decentralized participation."
+    ]
   },
-  FEATURE_GATED_PERMISSION_MODEL: {
-    title: "Feature-Gated Permission Model",
-    meta: "NFT-gated credentials",
-    body: [
-      "openTILL utilizes NFT-gated feature credentials to unlock defined system capabilities.",
-      "These digital credentials provide structured access rights and are not equity instruments.",
-    ],
+
+  ECOSYSTEM: {
+    title: "4. OPENTILL ECOSYSTEM",
+    content: [
+      "Merchants use openTILL POS as the operational core.",
+      "Consumers pay with cash, cards, EBT/SNAP, and supported digital assets.",
+      "Ambassadors help onboard merchants and expand adoption.",
+      "Builders create integrations and modules distributed as NFT-based Chips."
+    ]
   },
-  DIGITAL_UTILITY_CREDIT: {
-    title: "Digital Utility Credit (DUC)",
-    meta: "Utility instrument, not equity",
-    body: [
-      "The DUC provides feature unlock tiers, fee optimization levels, governance input weighting, and ecosystem participation privileges.",
-      "It does not convey ownership, dividends, or profit rights.",
-    ],
+
+  POS_PLATFORM: {
+    title: "5. OPENTILL POS PLATFORM",
+    content: [
+      "Unified payment processing for cards, cash, EBT/SNAP, and Solana-based digital assets.",
+      "Inventory, analytics, customer display, kitchen display, and transaction management.",
+      "Browser-based deployment on tablets, laptops, and desktops, with optional hardware marketplace support."
+    ]
   },
-  TOKENOMICS_ALLOCATION: {
-    title: "Tokenomics Allocation",
-    meta: "Allocation overview (visual in PDF page 5)",
-    body: [
-      "The tokenomics allocation is presented in the institutional whitepaper as a chart (see PDF page 5).",
-      "Use DOWNLOAD MANIFESTO to open the full PDF with the visuals.",
-    ],
+
+  FEATURES: {
+    title: "6. FEATURES OF OPENTILL",
+    content: [
+      "Dual pricing compliance",
+      "Solana Pay integration",
+      "EBT/SNAP integration",
+      "NFT-gated features",
+      "Two-factor authentication",
+      "Chip-based modular feature system"
+    ]
   },
-  EMISSION_MODEL_VISUALIZATION: {
-    title: "Emission Model Visualization",
-    meta: "Illustrative surplus vs processing volume (visual in PDF page 5)",
-    body: [
-      "The emission model visualization is shown as a chart in the institutional whitepaper (see PDF page 5).",
-      "Use DOWNLOAD MANIFESTO to open the full PDF with the visuals.",
-    ],
+
+  SMPF: {
+    title: "7. STRUCTURED MERCHANT PARTICIPATION FRAMEWORK",
+    content: [
+      "SMPF aligns merchant activity with ecosystem participation.",
+      "Merchants process transactions through openTILL and may earn DUC incentives based on activity.",
+      "DUC staking may unlock advanced integrations, higher service tiers, analytics, and priority support.",
+      "NFT-based Chips activate modular POS capabilities and third-party integrations."
+    ]
   },
-  PROJECT_DETAILS_ECOSYSTEM: {
-    title: "Project Details & Ecosystem",
-    meta: "Strategic infrastructure + framework design",
-    body: [
-      "openTILL is engineered as a merchant-aligned financial infrastructure platform.",
-      "Unlike traditional payment processors that operate on extraction-based models, openTILL utilizes a cloud-native framework to unify fragmented commerce operations.",
-      "The project's primary goal is to modernize payment processing through transparent economics and a participation-based reward system.",
-    ],
+
+  CHIPS: {
+    title: "8. NFT-BASED UPGRADE SYSTEM (CHIPS)",
+    content: [
+      "Chips are NFT-based software upgrade modules available in the openTILL marketplace.",
+      "Each Chip represents a feature, integration, or service module.",
+      "Merchants activate only the tools they need."
+    ]
   },
-  GOVERNANCE_AND_UTILITY: {
-    title: "Governance and Utility (The SMPF)",
-    meta: "Participation-weighted governance access",
-    body: [
-      "The project operates under the Structured Merchant Participation Framework (SMPF).",
-      "Central to this is the Digital Utility Credit (DUC), which serves as a unit of account within the ecosystem.",
-      "Access to advanced features and governance influence is managed through a Feature-Gated Permission Model (utilizing NFT-gated credentials), ensuring that ecosystem privileges are tied to active participation and verified credentials rather than equity ownership.",
-    ],
+
+  CUSTOMER_MODEL: {
+    title: "9. ECONOMIC MODEL FOR CUSTOMERS",
+    content: [
+      "Merchants can distribute DUC as loyalty and promotional incentives.",
+      "Customers benefit from broad payment flexibility and blockchain-based reward participation.",
+      "The model encourages repeat visits and long-term engagement."
+    ]
   },
-  SUSTAINABILITY_MODEL: {
-    title: "Sustainability Model",
-    meta: "Strict mathematical emission control",
-    body: [
-      "To ensure long-term viability, the project follows a strict mathematical emission model:",
-      "Emission Cap (EC) = Net Surplus (NS) × Emission Ratio (ER).",
-      "This ensures that the ecosystem only expands its credit supply when there is a verified net surplus in the treasury.",
-    ],
+
+  SECURITY: {
+    title: "10. SECURITY AND COMPLIANCE",
+    content: [
+      "2FA, secure account management, and encrypted communications protect merchant operations.",
+      "The platform is designed with payment-industry and digital-payment compliance awareness.",
+      "Security and operational integrity are core design priorities."
+    ]
   },
-  POS_PLATFORM_FEATURES: {
-    title: "POS Platform Features",
-    meta: "Operating System for Commerce",
-    body: ["The openTILL POS system is designed to be an all-in-one \"Operating System for Commerce,\" featuring:"],
-    bullets: [
-      "Unified Payment Processing: Integrated stack for credit, debit, and digital asset transactions with optimized fee structures.",
-      "Inventory Intelligence: Real-time stock tracking with automated reorder triggers and sales analytics.",
-      "QR-Based Ordering: Native support for tableside and remote ordering to reduce labor costs and improve customer flow.",
-      "Multi-Location Management: A centralized dashboard for enterprise users to manage menus, staff, and reporting across multiple sites.",
-      "Tiered Feature Unlocking: A scalable access model where merchants can unlock specialized modules based on their participation tier.",
-    ],
+
+  TOKENOMICS: {
+    title: "11. TOKENOMICS | DIGITAL UTILITY CREDIT (DUC)",
+    content: [
+      "DUC is the native utility token of the openTILL ecosystem.",
+      "It supports feature access, participation, staking, incentive distribution, and NFT Chip activation.",
+      "DUC is explicitly described as utility-only, not ownership or profit-sharing."
+    ]
   },
-  APPENDIX_A: {
-    title: "Appendix A — Mathematical Emission Model",
-    meta: "Formula sheet",
-    body: [
-      "Infrastructure Revenue (IR) = Processed Volume (PV) × Infrastructure Allocation (IA)",
-      "Net Surplus (NS) = IR − Operational Reserve (OR)",
-      "Emission Cap (EC) = NS × Emission Ratio (ER), where ER ≤ 1",
-      "If NS ≤ 0, then EC = 0 (no emission).",
-    ],
+
+  ALLOCATION: {
+    title: "12. TOKEN ALLOCATION & DISTRIBUTION",
+    content: [
+      "Total Supply: 11,000,000,000",
+      "Decimals: 6",
+      "Presale: 35%",
+      "Treasury: 25%",
+      "Merchant Rewards: 15%",
+      "Early Supporter Airdrop: 15%",
+      "Marketing: 5%",
+      "Dev Team: 5% with controlled vesting",
+      "Transfer Fee: 0.1%",
+      "Interest: 0.05%",
+      "Token Address: HduiwhPVavapx13moQDcg5Tk7YNyGoR3S8n94SZhL5o4"
+    ]
   },
-  APPENDIX_B: {
-    title: "Appendix B — Legal Positioning",
-    meta: "Compliance-first posture",
-    body: [
-      "The Digital Utility Credit is structured as a functional digital access instrument.",
-      "It does not represent equity, profit participation, revenue entitlement, or dividend rights.",
-      "Distribution is tied exclusively to measurable ecosystem participation.",
-      "openTILL commits to independent legal review, compliance-first structuring, and avoidance of speculative marketing language.",
-    ],
-  },
+
+  CONCLUSION: {
+    title: "13. CONCLUSION",
+    content: [
+      "openTILL SMPF is built to address long-standing limitations in traditional payment systems.",
+      "It combines modern POS tooling with blockchain-enabled participation and modular upgrades.",
+      "The long arc points toward a more open, adaptable, merchant-centered commerce future."
+    ]
+  }
 };
 
 export const fileSystem = {
   "C:": {
     openTILL: {
       "README.TXT":
-        "openTILL SMPF | Institutional Whitepaper v1.0\n\nType HELP to explore commands.\nTip: Use PAGES to list whitepaper pages, then PAGE [NAME] to render in page-format.\n",
-      "EXECUTIVE_SUMMARY.TXT": "Use: PAGE EXECUTIVE_SUMMARY",
-      "MARKET_CONTEXT.TXT": "Use: PAGE MARKET_CONTEXT",
-      "PLATFORM_ARCHITECTURE.TXT": "Use: PAGE PLATFORM_ARCHITECTURE",
-      "FEATURE_GATED_PERMISSION_MODEL.TXT": "Use: PAGE FEATURE_GATED_PERMISSION_MODEL",
-      "DIGITAL_UTILITY_CREDIT.TXT": "Use: PAGE DIGITAL_UTILITY_CREDIT",
-      "TOKENOMICS_ALLOCATION.TXT": "Use: PAGE TOKENOMICS_ALLOCATION",
-      "EMISSION_MODEL_VISUALIZATION.TXT": "Use: PAGE EMISSION_MODEL_VISUALIZATION",
-      "PROJECT_DETAILS_ECOSYSTEM.TXT": "Use: PAGE PROJECT_DETAILS_ECOSYSTEM",
-      "GOVERNANCE_AND_UTILITY.TXT": "Use: PAGE GOVERNANCE_AND_UTILITY",
-      "SUSTAINABILITY_MODEL.TXT": "Use: PAGE SUSTAINABILITY_MODEL",
-      "POS_PLATFORM_FEATURES.TXT": "Use: PAGE POS_PLATFORM_FEATURES",
-      "APPENDIX_A.TXT": "Use: PAGE APPENDIX_A",
-      "APPENDIX_B.TXT": "Use: PAGE APPENDIX_B",
-      WHITEPAPER: {
-        "PAGES.INDEX": "Use: PAGES\nUse: PAGE [NAME]\nExample: PAGE EXECUTIVE_SUMMARY\n",
+        "openTILL SMPF terminal.\nUse HELP to view commands.\nUse PAGES to browse whitepaper sections.\nUse OPEN WHITEPAPER to view the final PDF.",
+
+      "ABSTRACT.TXT":
+        "openTILL SMPF introduces a merchant-centered commerce infrastructure that merges modern POS tooling, modular Chips, and the Digital Utility Credit ($DUC) participation model.",
+
+      "TOKEN.TXT":
+        "DUC = Digital Utility Credit.\nNative utility token for access, participation, staking, Chips, and ecosystem incentives.",
+
+      "ROOT": {
+        "MISSION.TXT": "Merchant independence through open, flexible, lower-friction commerce infrastructure.",
+        "VISION.TXT": "A merchant-owned network where businesses participate directly in the value they create.",
+        "STATUS.TXT": "System ready. Whitepaper loaded. Core modules online."
       },
-    },
-  },
+
+      "WHITEPAPER": {
+        "LEGAL.TXT": "Legal disclaimer and utility clarification.",
+        "INTRODUCTION.TXT": "Merchant independence, unified POS, and DUC overview.",
+        "ECOSYSTEM.TXT": "Merchant, consumer, ambassador, and builder roles.",
+        "POS.TXT": "Unified payments, analytics, inventory, displays, and deployment.",
+        "FEATURES.TXT": "Dual pricing, Solana Pay, EBT/SNAP, NFT gating, 2FA, Chips.",
+        "SMPF.TXT": "Transaction activity, DUC incentives, staking, and Chip activation.",
+        "CHIPS.TXT": "NFT-based upgrade marketplace and modular POS features.",
+        "CUSTOMERS.TXT": "Loyalty, rewards, payment flexibility, repeat engagement.",
+        "SECURITY.TXT": "Security and compliance principles.",
+        "TOKENOMICS.TXT": "DUC overview, utility functions, incentives, and staking.",
+        "ALLOCATION.TXT": "11B supply, distribution, fees, and token address.",
+        "CONCLUSION.TXT": "Merchant-centered future of commerce."
+      }
+    }
+  }
 };
