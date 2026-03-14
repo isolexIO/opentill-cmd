@@ -1,24 +1,11 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import TerminalOutput from "../components/terminal/TerminalOutput";
 import TerminalHeader from "../components/terminal/TerminalHeader";
 import MobileCommandBar from "../components/terminal/MobileCommandBar";
 import { whitepaperPages, fileSystem } from "../components/terminal/terminalData";
 
-const WHITEPAPER_URL = "/openTill Whitepaper Final.pdf";
-
-const INITIAL_OUTPUT = [
-  {
-    type: "text",
-    content:
-      "--------------------------------------------------\n" +
-      "openTILL SMPF WHITEPAPER TERMINAL v3.0\n" +
-      "Structured Merchant Participation Framework\n" +
-      "Powered by $DUC\n" +
-      "--------------------------------------------------\n" +
-      "Type HELP for available commands."
-  }
-];
+const INITIAL_OUTPUT = [{ type: "text", content: "--------------------------------------------------\nType HELP for available commands." }];
 
 export default function Terminal() {
   const [outputItems, setOutputItems] = useState(INITIAL_OUTPUT);
@@ -29,62 +16,31 @@ export default function Terminal() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Pull-to-refresh state
   const pullStartY = useRef(null);
   const [pullDistance, setPullDistance] = useState(0);
   const PULL_THRESHOLD = 80;
-
-  const pageAliases = useMemo(
-    () => ({
-      DISCLAIMER: "LEGAL",
-      LEGAL: "LEGAL",
-      INTRO: "INTRODUCTION",
-      INTRODUCTION: "INTRODUCTION",
-      MISSION: "MISSION",
-      VISION: "VISION",
-      ECOSYSTEM: "ECOSYSTEM",
-      POS: "POS_PLATFORM",
-      PLATFORM: "POS_PLATFORM",
-      FEATURES: "FEATURES",
-      SMPF: "SMPF",
-      CHIPS: "CHIPS",
-      CHIP: "CHIPS",
-      CUSTOMERS: "CUSTOMER_MODEL",
-      CUSTOMER: "CUSTOMER_MODEL",
-      SECURITY: "SECURITY",
-      COMPLIANCE: "SECURITY",
-      TOKEN: "TOKENOMICS",
-      TOKENOMICS: "TOKENOMICS",
-      ALLOCATION: "ALLOCATION",
-      DISTRIBUTION: "ALLOCATION",
-      CONCLUSION: "CONCLUSION",
-      SUMMARY: "CONCLUSION",
-    }),
-    []
-  );
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
+  // Handle URL-based page navigation (back button support)
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const page = (params.get("page") || "").toUpperCase();
-    if (!page) return;
-
-    const resolvedPage = pageAliases[page] || page;
-    const p = whitepaperPages[resolvedPage];
-    if (p) {
-      setOutputItems(prev => {
-        const last = prev[prev.length - 1];
-        if (last?.type === "page" && last.pageKey === resolvedPage) return prev;
-        return [
-          ...prev,
-          { type: "text", content: "--------------------------------------------------" },
-          { type: "page", pageKey: resolvedPage, page: p }
-        ];
-      });
+    const page = params.get("page");
+    if (page) {
+      const p = whitepaperPages[page.toUpperCase()];
+      if (p) {
+        setOutputItems(prev => {
+          // Avoid duplicate if already shown
+          const last = prev[prev.length - 1];
+          if (last?.type === "page" && last.pageKey === page.toUpperCase()) return prev;
+          return [...prev, { type: "text", content: "--------------------------------------------------" }, { type: "page", pageKey: page.toUpperCase(), page: p }];
+        });
+      }
     }
-  }, [location.search, pageAliases]);
+  }, [location.search]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -94,8 +50,8 @@ export default function Terminal() {
 
   function getCurrentDir(path) {
     let dir = fileSystem;
-    for (const part of path) dir = dir?.[part];
-    return dir || {};
+    for (let part of path) dir = dir[part];
+    return dir;
   }
 
   function addText(content) {
@@ -103,166 +59,82 @@ export default function Terminal() {
   }
 
   function addPage(pageKey) {
-    const resolvedPage = pageAliases[pageKey] || pageKey;
-    const p = whitepaperPages[resolvedPage];
-
+    const p = whitepaperPages[pageKey];
     if (!p) {
-      addText("PAGE NOT FOUND. Type PAGES to list available whitepaper sections.");
+      addText("PAGE NOT FOUND. Type PAGES to list available pages.");
       return;
     }
-
-    navigate(`?page=${resolvedPage}`, { replace: false });
-    setOutputItems(prev => [...prev, { type: "page", pageKey: resolvedPage, page: p }]);
+    // Update URL for back-button support
+    navigate(`?page=${pageKey}`, { replace: false });
+    setOutputItems(prev => [...prev, { type: "page", pageKey, page: p }]);
   }
 
-  function normalizeTarget(raw) {
-    return raw.replace(/\s+/g, "_").replace(/-/g, "_").toUpperCase();
-  }
-
-  function openWhitepaper() {
-    addText("OPENING FINAL WHITEPAPER PDF...");
-    setTimeout(() => {
-      window.open(WHITEPAPER_URL, "_blank", "noopener,noreferrer");
-    }, 400);
-  }
-
-  function handleCommand(rawCmd) {
-    const cmd = rawCmd.trim();
-    const parts = cmd.split(" ");
+  function handleCommand(cmd) {
+    const parts = cmd.trim().split(" ");
     const action = (parts[0] || "").toUpperCase();
     const targetRaw = parts.slice(1).join(" ").trim();
-    const target = normalizeTarget(targetRaw);
+    const target = targetRaw.toUpperCase();
     const dir = getCurrentDir(currentPath);
 
     addText(`${currentPath.join("\\")}\\> ${cmd}`);
 
-    if (!cmd) return;
-
-    if (action === "RUN" && (target === "OPENTILL" || target === "PLATFORM")) {
-      addText(">> AUTHORIZING CLOUD-NATIVE COMMERCE INTERFACE...");
-      setTimeout(() => {
-        window.open("https://node1.opentill.io/", "_blank", "noopener,noreferrer");
-      }, 800);
-      return;
-    }
-
-    if (action === "OPEN" && (target === "WHITEPAPER" || target === "PDF")) {
-      openWhitepaper();
-      return;
-    }
-
-    if (action === "DOWNLOAD" && (target === "WHITEPAPER" || target === "PDF")) {
-      openWhitepaper();
+    if (action === "RUN" && target === "OPENTILL") {
+      addText(">> AUTHORIZING CLOUD-NATIVE INTERFACE...");
+      setTimeout(() => { window.open("https://node1.opentill.io/", "_blank"); }, 800);
       return;
     }
 
     switch (action) {
       case "HELP":
         addText(
-          "AVAILABLE COMMANDS\n" +
-          "--------------------------------------------------\n" +
-          "HELP                 - Show command list\n" +
-          "DIR                  - List current directory\n" +
-          "CD [DIR]             - Change directory\n" +
-          "CD ..                - Move up one directory\n" +
-          "LOAD [FILE]          - Read a file from current directory\n" +
-          "PAGES                - List whitepaper sections\n" +
-          "PAGE [NAME]          - Render a whitepaper section\n" +
-          "OPEN WHITEPAPER      - Open final PDF\n" +
-          "DOWNLOAD WHITEPAPER  - Open final PDF\n" +
-          "RUN openTILL         - Launch platform\n" +
-          "STATUS               - Platform overview\n" +
-          "CLS                  - Clear terminal\n" +
-          "--------------------------------------------------\n" +
-          "Examples:\n" +
-          "PAGE SMPF\n" +
-          "PAGE TOKENOMICS\n" +
-          "PAGE ALLOCATION\n" +
-          "LOAD ABSTRACT.TXT"
+          `DIR                - List directory\nCD [DIR]           - Change directory\nCD ..              - Go back\nLOAD [FILE]        - Read file\nPAGES              - List whitepaper pages\nPAGE [NAME]        - Render a whitepaper page\nRUN openTILL       - Launch platform\nDOWNLOAD MANIFESTO - Open institutional PDF\nCLS                - Clear screen`
         );
         break;
 
-      case "STATUS":
-        addText(
-          "openTILL SYSTEM STATUS\n" +
-          "--------------------------------------------------\n" +
-          "DOCUMENT:  Final SMPF Whitepaper\n" +
-          "TOKEN:     Digital Utility Credit ($DUC)\n" +
-          "MODEL:     Structured Merchant Participation Framework\n" +
-          "MODULES:   POS | CHIPS | TOKENOMICS | REWARDS | SECURITY\n" +
-          "NETWORK:   Merchant | Consumer | Ambassador | Builder\n" +
-          "STATE:     READY"
+      case "DIR":
+        addText(` Directory of ${currentPath.join("\\")}\n----------------------------------\n` +
+          Object.entries(dir).map(([k, v]) =>
+            `${k.padEnd(26)} <${typeof v === "string" ? "FILE" : "DIR "}>`
+          ).join("\n")
         );
         break;
-
-      case "DIR": {
-        const entries = Object.entries(dir);
-        if (!entries.length) {
-          addText(` Directory of ${currentPath.join("\\")}\n----------------------------------\n<EMPTY>`);
-          break;
-        }
-
-        addText(
-          ` Directory of ${currentPath.join("\\")}\n` +
-            "----------------------------------\n" +
-            entries
-              .map(([k, v]) => `${k.padEnd(26)} <${typeof v === "string" ? "FILE" : "DIR "}>`)
-              .join("\n")
-        );
-        break;
-      }
 
       case "CD":
         if (target === "..") {
-          if (currentPath.length > 2) {
-            setCurrentPath(prev => prev.slice(0, -1));
-          } else {
-            addText("ALREADY AT ROOT DIRECTORY.");
-          }
-          break;
+          if (currentPath.length > 2) setCurrentPath(prev => prev.slice(0, -1));
         } else {
-          const found = Object.keys(dir).find(
-            k => normalizeTarget(k) === target && typeof dir[k] !== "string"
-          );
-          if (found) {
-            setCurrentPath(prev => [...prev, found]);
-          } else {
-            addText("DIRECTORY NOT FOUND.");
-          }
+          const found = Object.keys(dir).find(k => k.toUpperCase() === target && typeof dir[k] !== "string");
+          if (found) setCurrentPath(prev => [...prev, found]);
+          else addText("DIRECTORY NOT FOUND.");
         }
         break;
 
       case "LOAD": {
-        const fileName = Object.keys(dir).find(
-          k => normalizeTarget(k) === target && typeof dir[k] === "string"
-        );
-        if (fileName) {
-          addText("--------------------------------------------------\n" + dir[fileName] + "\n--------------------------------------------------");
-        } else {
-          addText("FILE NOT FOUND.");
-        }
+        const fileName = Object.keys(dir).find(k => k.toUpperCase() === target && typeof dir[k] === "string");
+        if (fileName) addText("--------------------------------------------------\n" + dir[fileName] + "\n--------------------------------------------------");
+        else addText("FILE NOT FOUND.");
         break;
       }
 
       case "PAGES": {
         const keys = Object.keys(whitepaperPages);
-        addText(
-          "AVAILABLE WHITEPAPER SECTIONS\n" +
-            "----------------------------------\n" +
-            keys.map(k => " " + k).join("\n") +
-            "\n----------------------------------\n" +
-            "Use: PAGE [NAME]"
-        );
+        addText("AVAILABLE PAGES\n----------------------------------\n" + keys.map(k => " " + k).join("\n") + "\n----------------------------------\nUse: PAGE [NAME]");
         break;
       }
 
       case "PAGE":
-        if (!target) {
-          addText("USAGE: PAGE [NAME]  | Type PAGES to list available sections.");
-          break;
-        }
+        if (!target) { addText("USAGE: PAGE [NAME]  | Type PAGES to list options."); break; }
         addText("--------------------------------------------------");
         addPage(target);
+        break;
+
+      case "DOWNLOAD":
+        if (target === "MANIFESTO") {
+          addText("OPENING DOCUMENT... PLEASE WAIT.");
+          setTimeout(() => { window.open("https://ipfs.io/ipns/k51qzi5uqu5dgaqxrofaep6t6xvv0x7y0pkuyp9by69r0s9fl2h4dbbvf7uab5", "_blank"); }, 500);
+        } else {
+          addText("UNKNOWN DOWNLOAD TARGET.");
+        }
         break;
 
       case "CLS":
@@ -271,7 +143,7 @@ export default function Terminal() {
         break;
 
       default:
-        addText("UNKNOWN COMMAND. Type HELP.");
+        if (cmd.trim() !== "") addText("UNKNOWN COMMAND.");
     }
   }
 
@@ -283,6 +155,7 @@ export default function Terminal() {
     }
   }
 
+  // Pull-to-refresh handlers
   function onTouchStart(e) {
     if (window.scrollY === 0) pullStartY.current = e.touches[0].clientY;
   }
@@ -310,6 +183,7 @@ export default function Terminal() {
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
+      {/* Pull-to-refresh indicator */}
       {pullDistance > 0 && (
         <div
           className="fixed top-0 left-0 w-full flex items-center justify-center z-50 text-xs transition-all"
@@ -320,28 +194,25 @@ export default function Terminal() {
             opacity: pullDistance / PULL_THRESHOLD,
           }}
         >
-          {pullDistance >= PULL_THRESHOLD ? "↑ Release to clear terminal" : "↓ Pull to clear"}
+          {pullDistance >= PULL_THRESHOLD ? "↑ Release to clear screen" : "↓ Pull to refresh (CLS)"}
         </div>
       )}
 
+      {/* Background image */}
       <div
         className="fixed inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage:
-            'url("https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a172f6f971ae630e926921/07230f1fc_ducsinarow.png")',
+          backgroundImage: 'url("https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69a172f6f971ae630e926921/07230f1fc_ducsinarow.png")',
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.08,
           filter: "saturate(0.9) contrast(1.05)",
         }}
       />
-
+      {/* Vignette */}
       <div
         className="fixed inset-0 pointer-events-none z-0"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 35%, rgba(0,0,0,0.35), rgba(0,0,0,0.88) 70%)",
-        }}
+        style={{ background: "radial-gradient(circle at 50% 35%, rgba(0,0,0,0.35), rgba(0,0,0,0.88) 70%)" }}
       />
 
       <div
@@ -349,18 +220,16 @@ export default function Terminal() {
         style={{ paddingTop: "calc(env(safe-area-inset-top) + 1rem)" }}
       >
         <TerminalHeader />
+
         <TerminalOutput outputItems={outputItems} />
 
-        <div
-          className="flex items-center mt-1"
-          style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 7rem)" }}
-        >
+        {/* Input line */}
+        <div className="flex items-center mt-1" style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 7rem)" }}>
           <span className="mr-2 font-bold" style={{ color: "#14f1ff" }}>
             {currentPath.join("\\")}{"\\>"}
           </span>
-
-          <span className="relative flex-1 min-w-0">
-            <span className="whitespace-pre-wrap break-all">{inputValue}</span>
+          <span className="relative flex-1">
+            <span className="whitespace-pre">{inputValue}</span>
             <span
               className="inline-block w-2.5 align-bottom ml-0.5"
               style={{
@@ -376,11 +245,10 @@ export default function Terminal() {
               value={inputValue}
               onChange={e => setInputValue(e.target.value)}
               onKeyDown={onKeyDown}
-              className="absolute inset-0 opacity-0 w-full h-full"
+              className="absolute opacity-0 pointer-events-none w-full"
               autoComplete="off"
               spellCheck={false}
               autoFocus
-              inputMode="text"
             />
           </span>
         </div>
@@ -388,8 +256,10 @@ export default function Terminal() {
         <div ref={bottomRef} />
       </div>
 
+      {/* Mobile Command Bar */}
       <MobileCommandBar onCommand={handleCommand} />
 
+      {/* Footer */}
       <div
         className="fixed bottom-0 left-0 w-full z-20 text-xs border-t"
         style={{
@@ -406,24 +276,16 @@ export default function Terminal() {
         <div className="flex items-center justify-between flex-wrap gap-1">
           <span>
             © 2026 ISOLEX CORPORATION |{" "}
-            <a
-              href="https://app.isolex.io"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#14f1ff" }}
-            >
+            <a href="https://app.isolex.io" target="_blank" rel="noopener" style={{ color: "#14f1ff" }}>
               app.isolex.io
             </a>
           </span>
+
         </div>
       </div>
 
       <style>{`
-        @keyframes dosblink {
-          0% { opacity: 1; }
-          50% { opacity: 0; }
-          100% { opacity: 1; }
-        }
+        @keyframes dosblink { 0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;} }
       `}</style>
     </div>
   );
