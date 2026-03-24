@@ -14,7 +14,7 @@ export default function TerminalHeader() {
 
       <div className="flex flex-col gap-1">
         <h2 className="m-0 font-bold text-lg tracking-wide" style={{ color: "#14f1ff" }}>
-          openTILL LITEPAPER TERMINAL v1.0 [DRAFT]
+          openTILL LITEPAPER TERMINAL v1.0
         </h2>
         <span className="text-sm" style={{ color: "#008e76" }}>
           The Blueprint for Merchant Sovereignty
