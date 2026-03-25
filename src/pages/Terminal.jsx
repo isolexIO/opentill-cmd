@@ -87,7 +87,7 @@ export default function Terminal() {
     switch (action) {
       case "HELP":
         addText(
-          `DIR                - List directory\nCD [DIR]           - Change directory\nCD ..              - Go back\nLOAD [FILE]        - Read file\nPAGES              - List whitepaper pages\nPAGE [NAME]        - Render a whitepaper page\nRUN openTILL       - Launch platform\nDOWNLOAD MANIFESTO - Open institutional PDF\nCLS                - Clear screen`
+          `DIR                - List directory\nCD [DIR]           - Change directory\nCD ..              - Go back\nLOAD [FILE]        - Read file\nPAGES              - List whitepaper pages\nPAGE [NAME]        - Render a whitepaper page\nRUN openTILL       - Launch platform\nDOWNLOAD MANIFESTO - Open institutional PDF\nPRESALE            - Open presale portal\nCLS                - Clear screen`
         );
         break;
 
@@ -135,6 +135,11 @@ export default function Terminal() {
         } else {
           addText("UNKNOWN DOWNLOAD TARGET.");
         }
+        break;
+
+      case "PRESALE":
+        addText(">> LAUNCHING PRESALE PORTAL...");
+        setTimeout(() => { window.open("https://ico.openTILL.io", "_blank"); }, 500);
         break;
 
       case "CLS":

@@ -5,6 +5,7 @@ export default function MobileCommandBar({ onCommand }) {
     { label: "PAGES", cmd: "PAGES" },
     { label: "CLS", cmd: "CLS" },
     { label: "RUN", cmd: "RUN openTILL" },
+    { label: "PRESALE", cmd: "PRESALE" },
   ];
 
   return (
