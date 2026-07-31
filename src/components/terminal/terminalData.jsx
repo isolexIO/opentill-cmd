@@ -129,7 +129,6 @@ export const whitepaperPages = {
       "Total Supply ............. 11,000,000,000",
       "Decimals ................. 6",
       "Token Address ............ HduiwhPVavapx13moQDcg5Tk7YNyGoR3S8n94SZhL5o4",
-      "Transfer Fee ............. 0.1% | Interest: 0.05%",
     ],
     bullets: [
       "Presale .................. 35%",
