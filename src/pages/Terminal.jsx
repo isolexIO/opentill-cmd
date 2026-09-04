@@ -131,7 +131,7 @@ export default function Terminal() {
       case "DOWNLOAD":
         if (target === "MANIFESTO") {
           addText("OPENING DOCUMENT... PLEASE WAIT.");
-          setTimeout(() => { window.open("https://media.base44.com/files/public/69a172f6f971ae630e926921/1eef2a329_openTILL_Whitepaper_Transfer_Fee_Removed.pdf", "_blank"); }, 500);
+          setTimeout(() => { window.open("https://media.base44.com/files/public/69a172f6f971ae630e926921/55852e990_openTILL_Whitepaper_openTILL_Corporation_Permanent_Steward.pdf", "_blank"); }, 500);
         } else {
           addText("UNKNOWN DOWNLOAD TARGET.");
         }
