@@ -280,9 +280,9 @@ export default function Terminal() {
       >
         <div className="flex items-center justify-between flex-wrap gap-1">
           <span>
-            © 2026 ISOLEX CORPORATION |{" "}
-            <a href="https://app.isolex.io" target="_blank" rel="noopener" style={{ color: "#14f1ff" }}>
-              app.isolex.io
+            © 2026 openTILL CORPORATION |{" "}
+            <a href="https://opentill.io" target="_blank" rel="noopener" style={{ color: "#14f1ff" }}>
+              opentill.io
             </a>
           </span>
 
