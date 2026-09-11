@@ -131,7 +131,7 @@ export default function Terminal() {
       case "DOWNLOAD":
         if (target === "MANIFESTO") {
           addText("OPENING DOCUMENT... PLEASE WAIT.");
-          setTimeout(() => { window.open("https://media.base44.com/files/public/69a172f6f971ae630e926921/55852e990_openTILL_Whitepaper_openTILL_Corporation_Permanent_Steward.pdf", "_blank"); }, 500);
+          setTimeout(() => { window.open("https://media.base44.com/files/public/69a172f6f971ae630e926921/1eef2a329_openTILL_Whitepaper_Transfer_Fee_Removed.pdf", "_blank"); }, 500);
         } else {
           addText("UNKNOWN DOWNLOAD TARGET.");
         }
@@ -280,9 +280,9 @@ export default function Terminal() {
       >
         <div className="flex items-center justify-between flex-wrap gap-1">
           <span>
-            © 2026 openTILL CORPORATION |{" "}
-            <a href="https://opentill.io" target="_blank" rel="noopener" style={{ color: "#14f1ff" }}>
-              opentill.io
+            © 2026 ISOLEX CORPORATION |{" "}
+            <a href="https://app.isolex.io" target="_blank" rel="noopener" style={{ color: "#14f1ff" }}>
+              app.isolex.io
             </a>
           </span>
 
